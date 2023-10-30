@@ -96,7 +96,7 @@ export function Game() {
             );
         }
         if (move > 0) {
-            des = "Go to move #" + move;
+            des = "Go to move #" + move + " " +toRowAndCol(getNewSquare(history[move - 1], history[move]));
         } else {
             des = "Go to game start";
         }
@@ -108,6 +108,18 @@ export function Game() {
     })
 
     const orderedMoves = isAscending ? moves : moves.slice().reverse();
+
+    function getNewSquare(prev, curr) {
+        for (let i = 0; i < curr.length; i++) {
+            if (prev[i] !== curr[i]) {
+                return i;
+            }
+        }
+    }
+
+    function toRowAndCol(ind, row = 3, col = 3) {
+        return "(" + (Math.floor(ind / col) + 1) + ", " + ((ind % col) + 1) + ")";
+    }
 
     function restart() {
         setCurrentMove(0);
